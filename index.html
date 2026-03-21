@@ -129,7 +129,8 @@
     .hero-bg {
       position: absolute;
       inset: -10%;
-      background: url('https://picsum.photos/seed/sport1/1920/1080') center/cover no-repeat;
+      background: url('') center/cover no-repeat;
+      /* JS sets this from HERO_IMAGE below */
       transform: translateY(0);
       will-change: transform;
       transition: none;
@@ -740,7 +741,7 @@
     <h2 class="section-heading reveal">The eye behind<br /><em>the lens</em></h2>
     <div class="about-grid">
       <div class="reveal">
-        <img class="about-photo" src="https://picsum.photos/seed/sport8/600/800" alt="Lucas Lefty portrait" />
+        <img class="about-photo" id="aboutPhoto" src="" alt="Lucas Lefty portrait" />
       </div>
       <div class="about-right reveal">
         <p class="about-bio">
@@ -892,19 +893,43 @@
   <script>
     'use strict';
 
-    // ── Portfolio data ───────────────────────────────────────────────────────
+    // ════════════════════════════════════════════════════════════════════════
+    // IMAGE CONFIGURATION
+    // Replace every placeholder URL below with your Cloudinary URLs.
+    //
+    // Cloudinary URL format:
+    //   https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/FILENAME.jpg
+    //
+    // Tip: add transformation params for performance, e.g.:
+    //   .../image/upload/w_1400,q_auto,f_auto/FILENAME.jpg
+    // ════════════════════════════════════════════════════════════════════════
+
+    // ── Hero background ──────────────────────────────────────────────────────
+    // Replace with your hero/banner photo (wide landscape, high impact)
+    const HERO_IMAGE = 'https://picsum.photos/seed/sport1/1920/1080';
+
+    // ── About portrait ───────────────────────────────────────────────────────
+    // Replace with your professional portrait (tall, portrait orientation works best)
+    const ABOUT_IMAGE = 'https://picsum.photos/seed/sport8/600/800';
+
+    // ── Portfolio photos ─────────────────────────────────────────────────────
+    // Each entry: { src, label }
+    //   src   — your Cloudinary URL (shown in the grid)
+    //   label — sport/event name shown on hover and in the lightbox caption
+    //
+    // Add or remove entries freely. The grid reflows automatically.
     const PHOTOS = [
-      { seed: 'sport1',  label: 'Track & Field',     w: 1200, h: 800  },
-      { seed: 'sport2',  label: 'Basketball',         w: 800,  h: 1100 },
-      { seed: 'sport3',  label: 'Soccer',             w: 1200, h: 700  },
-      { seed: 'sport4',  label: 'Tennis',             w: 900,  h: 1200 },
-      { seed: 'sport5',  label: 'Swimming',           w: 1200, h: 800  },
-      { seed: 'sport6',  label: 'American Football',  w: 800,  h: 1000 },
-      { seed: 'sport7',  label: 'Cycling',            w: 1200, h: 750  },
-      { seed: 'sport9',  label: 'Boxing',             w: 900,  h: 1100 },
-      { seed: 'sport10', label: 'Gymnastics',         w: 1200, h: 800  },
-      { seed: 'sport11', label: 'Rugby',              w: 800,  h: 950  },
-      { seed: 'sport12', label: 'Athletics',          w: 1200, h: 700  },
+      { src: 'https://picsum.photos/seed/sport1/1200/800',   label: 'Track & Field'    },
+      { src: 'https://picsum.photos/seed/sport2/800/1100',   label: 'Basketball'       },
+      { src: 'https://picsum.photos/seed/sport3/1200/700',   label: 'Soccer'           },
+      { src: 'https://picsum.photos/seed/sport4/900/1200',   label: 'Tennis'           },
+      { src: 'https://picsum.photos/seed/sport5/1200/800',   label: 'Swimming'         },
+      { src: 'https://picsum.photos/seed/sport6/800/1000',   label: 'American Football'},
+      { src: 'https://picsum.photos/seed/sport7/1200/750',   label: 'Cycling'          },
+      { src: 'https://picsum.photos/seed/sport9/900/1100',   label: 'Boxing'           },
+      { src: 'https://picsum.photos/seed/sport10/1200/800',  label: 'Gymnastics'       },
+      { src: 'https://picsum.photos/seed/sport11/800/950',   label: 'Rugby'            },
+      { src: 'https://picsum.photos/seed/sport12/1200/700',  label: 'Athletics'        },
     ];
 
     // ── Client logos ─────────────────────────────────────────────────────────
@@ -913,6 +938,10 @@
       'Nike', 'Adidas', 'ESPN Magazine', 'L\'Équipe', 'AP Photo', 'BBC Sport',
     ];
 
+    // ── Apply hero & about images ────────────────────────────────────────────
+    document.getElementById('heroBg').style.backgroundImage = `url('${HERO_IMAGE}')`;
+    document.getElementById('aboutPhoto').src = ABOUT_IMAGE;
+
     // ── Populate portfolio grid ──────────────────────────────────────────────
     const grid = document.getElementById('masonryGrid');
     PHOTOS.forEach((p, i) => {
@@ -920,7 +949,7 @@
       item.className = 'masonry-item';
       item.dataset.index = i;
       item.innerHTML = `
-        <img src="https://picsum.photos/seed/${p.seed}/${p.w}/${p.h}" alt="${p.label}" loading="lazy" />
+        <img src="${p.src}" alt="${p.label}" loading="lazy" />
         <div class="masonry-overlay">
           <span class="masonry-label">${p.label}</span>
         </div>`;
@@ -956,7 +985,7 @@
 
     function updateLightboxImg() {
       const p = PHOTOS[lbIndex];
-      lbImg.src = `https://picsum.photos/seed/${p.seed}/1400/900`;
+      lbImg.src = p.src;
       lbImg.alt = p.label;
       lbCaption.textContent = p.label;
     }
