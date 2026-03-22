@@ -1109,8 +1109,7 @@
       }
 
       // Only use landscape images (width > height) in the hero slideshow
-      const catSrcs = Object.values(CAT_PHOTOS).flat().map(p => p.src);
-      const allSrcs = [...new Set([...PHOTOS.map(p => p.src), ...catSrcs])];
+      const allSrcs = PHOTOS.map(p => p.src);
       let loaded = 0;
       const landscapeSrcs = [];
       allSrcs.forEach(src => {
