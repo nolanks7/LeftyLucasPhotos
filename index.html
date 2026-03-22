@@ -1230,6 +1230,8 @@
         { src: 'https://res.cloudinary.com/du9tk8u11/image/upload/v1774157726/emmanwori1_rbf7j7.jpg', label: '' },
         { src: 'https://res.cloudinary.com/du9tk8u11/image/upload/v1774157636/rasheed3_o3mzic.jpg', label: '' },
         { src: 'https://res.cloudinary.com/du9tk8u11/image/upload/v1774157636/rasheed2_m8f8xd.jpg', label: '' },
+        { src: 'https://res.cloudinary.com/du9tk8u11/image/upload/v1774157635/rasheed1_zrr9f4.jpg', label: '' },
+        { src: 'https://res.cloudinary.com/du9tk8u11/image/upload/v1774157726/emmanwori2_wsxfnn.jpg', label: '' },
       ],
       'live-events': [],
     };
@@ -1256,7 +1258,7 @@
           const item = document.createElement('div');
           item.className = 'cat-gallery-item';
           item.innerHTML = `
-            <img src="${p.src}" alt="${p.label}" loading="lazy" />
+            <img src="${p.src}" alt="${p.label}" loading="eager" />
             <div class="cat-gallery-item-label">${p.label}</div>`;
           item.addEventListener('click', () => {
             closeCatGallery();
