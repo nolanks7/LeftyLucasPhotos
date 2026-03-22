@@ -324,26 +324,28 @@
       position: relative;
       overflow: hidden;
       cursor: crosshair;
+      aspect-ratio: 4/3;
     }
 
-    /* Row 1: photos 1 & 2 — 2 across */
+    /* Row 1: photos 1 & 2 — 2 across, landscape ratio */
     .masonry-item:nth-child(1),
     .masonry-item:nth-child(2) {
       grid-column: span 3;
+      aspect-ratio: 3/2;
     }
 
     /* Row 4: photos 9 & 10 — 2 across (mirrors row 1) */
     .masonry-item:nth-child(9),
     .masonry-item:nth-child(10) {
       grid-column: span 3;
+      aspect-ratio: 3/2;
     }
 
     .masonry-item img {
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: contain;
-      background: #0a0a0a;
+      object-fit: cover;
       transition: transform 0.7s ease;
       cursor: crosshair;
     }
