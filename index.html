@@ -1099,30 +1099,46 @@
         return a;
       }
 
-      const heroImages = shuffle(PHOTOS.map(p => p.src));
       let idx = 0;
       let activeSlot = 0; // 0 = A visible, 1 = B visible
       const bgA = document.getElementById('heroBgA');
       const bgB = document.getElementById('heroBgB');
 
-      bgA.style.backgroundImage = `url('${heroImages[0]}')`;
+      function startSlideshow(heroImages) {
+        if (!heroImages.length) return;
+        bgA.style.backgroundImage = `url('${heroImages[0]}')`;
 
-      function nextSlide() {
-        idx = (idx + 1) % heroImages.length;
-        if (activeSlot === 0) {
-          bgB.style.backgroundImage = `url('${heroImages[idx]}')`;
-          bgB.style.opacity = '1';
-          bgA.style.opacity = '0';
-          activeSlot = 1;
-        } else {
-          bgA.style.backgroundImage = `url('${heroImages[idx]}')`;
-          bgA.style.opacity = '1';
-          bgB.style.opacity = '0';
-          activeSlot = 0;
+        function nextSlide() {
+          idx = (idx + 1) % heroImages.length;
+          if (activeSlot === 0) {
+            bgB.style.backgroundImage = `url('${heroImages[idx]}')`;
+            bgB.style.opacity = '1';
+            bgA.style.opacity = '0';
+            activeSlot = 1;
+          } else {
+            bgA.style.backgroundImage = `url('${heroImages[idx]}')`;
+            bgA.style.opacity = '1';
+            bgB.style.opacity = '0';
+            activeSlot = 0;
+          }
         }
+
+        setInterval(nextSlide, 3000);
       }
 
-      setInterval(nextSlide, 3000);
+      // Only use landscape images (width > height) in the hero slideshow
+      const allSrcs = PHOTOS.map(p => p.src);
+      let loaded = 0;
+      const landscapeSrcs = [];
+      allSrcs.forEach(src => {
+        const img = new Image();
+        img.onload = img.onerror = function () {
+          if (img.naturalWidth > img.naturalHeight) landscapeSrcs.push(src);
+          loaded++;
+          if (loaded === allSrcs.length) startSlideshow(shuffle(landscapeSrcs));
+        };
+        img.src = src;
+      });
     })();
 
     // ── Populate portfolio grid ──────────────────────────────────────────────
