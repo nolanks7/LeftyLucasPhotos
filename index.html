@@ -129,11 +129,10 @@
     .hero-bg {
       position: absolute;
       inset: -10%;
-      background: url('') center/cover no-repeat;
-      /* JS sets this from HERO_IMAGE below */
+      background: center/cover no-repeat;
       transform: translateY(0);
       will-change: transform;
-      transition: none;
+      transition: opacity 1.5s ease;
     }
 
     .hero-overlay {
@@ -851,7 +850,8 @@
 
   <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
   <section id="hero">
-    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-bg" id="heroBgA"></div>
+    <div class="hero-bg" id="heroBgB" style="opacity:0;"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Sports &amp; Editorial Photography</p>
@@ -1085,9 +1085,45 @@
       'Nike', 'Adidas', 'ESPN Magazine', 'L\'Équipe', 'AP Photo', 'BBC Sport',
     ];
 
-    // ── Apply hero & about images ────────────────────────────────────────────
-    document.getElementById('heroBg').style.backgroundImage = `url('${HERO_IMAGE}')`;
+    // ── Apply about image ────────────────────────────────────────────────────
     document.getElementById('aboutPhoto').src = ABOUT_IMAGE;
+
+    // ── Hero background slideshow (shuffled) ─────────────────────────────────
+    (function () {
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      const heroImages = shuffle(PHOTOS.map(p => p.src));
+      let idx = 0;
+      let activeSlot = 0; // 0 = A visible, 1 = B visible
+      const bgA = document.getElementById('heroBgA');
+      const bgB = document.getElementById('heroBgB');
+
+      bgA.style.backgroundImage = `url('${heroImages[0]}')`;
+
+      function nextSlide() {
+        idx = (idx + 1) % heroImages.length;
+        if (activeSlot === 0) {
+          bgB.style.backgroundImage = `url('${heroImages[idx]}')`;
+          bgB.style.opacity = '1';
+          bgA.style.opacity = '0';
+          activeSlot = 1;
+        } else {
+          bgA.style.backgroundImage = `url('${heroImages[idx]}')`;
+          bgA.style.opacity = '1';
+          bgB.style.opacity = '0';
+          activeSlot = 0;
+        }
+      }
+
+      setInterval(nextSlide, 5000);
+    })();
 
     // ── Populate portfolio grid ──────────────────────────────────────────────
     const grid = document.getElementById('masonryGrid');
@@ -1229,10 +1265,10 @@
     }, { passive: true });
 
     // ── Parallax hero ────────────────────────────────────────────────────────
-    const heroBg = document.getElementById('heroBg');
+    const heroBgEls = document.querySelectorAll('.hero-bg');
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
-      heroBg.style.transform = `translateY(${y * 0.35}px)`;
+      heroBgEls.forEach(el => { el.style.transform = `translateY(${y * 0.35}px)`; });
     }, { passive: true });
 
     // ── Mobile menu ──────────────────────────────────────────────────────────
