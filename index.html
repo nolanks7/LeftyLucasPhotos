@@ -315,7 +315,7 @@
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 1rem;
-      align-items: end;
+      align-items: stretch;
     }
 
     /* Symmetric 2-3-3-2 layout for 10 photos */
@@ -340,7 +340,10 @@
 
     .masonry-item img {
       width: 100%;
+      height: 100%;
       display: block;
+      object-fit: contain;
+      background: #0a0a0a;
       transition: transform 0.7s ease;
       cursor: crosshair;
     }
