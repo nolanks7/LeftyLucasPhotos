@@ -564,80 +564,7 @@
       flex-wrap: wrap;
     }
 
-    /* ─── Clients ───────────────────────────────────────────────────────── */
-    #clients {
-      padding: 5rem 0;
-      overflow: hidden;
-      border-top: 1px solid #f0f0f0;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .clients-label {
-      text-align: center;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 2.5rem;
-    }
-
-    .clients-track-wrap {
-      overflow: hidden;
-      position: relative;
-    }
-
-    .clients-track-wrap::before,
-    .clients-track-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 8rem;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .clients-track-wrap::before {
-      left: 0;
-      background: linear-gradient(to right, #fff, transparent);
-    }
-
-    .clients-track-wrap::after {
-      right: 0;
-      background: linear-gradient(to left, #fff, transparent);
-    }
-
-    .clients-track {
-      display: flex;
-      gap: 3rem;
-      animation: scrollTrack 28s linear infinite;
-      width: max-content;
-    }
-
-    @keyframes scrollTrack {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .client-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 160px; height: 54px;
-      border: 1px solid #e0e0e0;
-      flex-shrink: 0;
-    }
-
-    .client-logo span {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.12em;
-      color: #aaa;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    /* ─── Services ──────────────────────────────────────────────────────── */
+/* ─── Services ──────────────────────────────────────────────────────── */
     #services {
       padding: 8rem 4rem;
     }
@@ -834,7 +761,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" onclick="closeMenu()">About</a></li>
       <li><a href="#portfolio" onclick="closeMenu()">Portfolio</a></li>
-      <li><a href="#clients" onclick="closeMenu()">Clients</a></li>
       <li><a href="#services" onclick="closeMenu()">Services</a></li>
       <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
     </ul>
@@ -916,16 +842,6 @@
     </div>
     <div class="cat-gallery-grid" id="catGalleryGrid"></div>
   </div>
-
-  <!-- ═══ CLIENTS ══════════════════════════════════════════════════════════ -->
-  <section id="clients">
-    <p class="clients-label">As Seen In &nbsp;/&nbsp; Trusted By</p>
-    <div class="clients-track-wrap">
-      <div class="clients-track" id="clientsTrack">
-        <!-- populated by JS for duplication -->
-      </div>
-    </div>
-  </section>
 
   <!-- ═══ SERVICES ═════════════════════════════════════════════════════════ -->
   <section id="services">
@@ -1038,11 +954,6 @@
       { src: 'https://res.cloudinary.com/du9tk8u11/image/upload/v1774139331/demarcus_lawrence_for_lucas_1_mpq0yr.jpg', label: 'Demarcus Lawrence' },
     ];
 
-    // ── Client logos ─────────────────────────────────────────────────────────
-    const CLIENTS = [
-      'Sports Illustrated', 'Getty Images', 'Reuters', 'The Guardian',
-      'Nike', 'Adidas', 'ESPN Magazine', 'L\'Équipe', 'AP Photo', 'BBC Sport',
-    ];
 
     // ── Apply about image ────────────────────────────────────────────────────
     document.getElementById('aboutPhoto').src = ABOUT_IMAGE;
@@ -1114,14 +1025,6 @@
       item.addEventListener('click', () => openLightbox(i));
       grid.appendChild(item);
     });
-
-    // ── Populate client logos ────────────────────────────────────────────────
-    const track = document.getElementById('clientsTrack');
-    const buildLogos = () => CLIENTS.map(n =>
-      `<div class="client-logo"><span>${n}</span></div>`
-    ).join('');
-    // duplicate for seamless loop
-    track.innerHTML = buildLogos() + buildLogos();
 
     // ── Lightbox ─────────────────────────────────────────────────────────────
     let lbIndex = 0;
