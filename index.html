@@ -664,6 +664,97 @@
 
     .contact-email:hover { border-color: #C9A84C; }
 
+    .contact-form {
+      max-width: 600px;
+      margin: 3rem auto 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .contact-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .contact-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #0A0A0A;
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+    }
+
+    .contact-form select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      border-color: #C9A84C;
+    }
+
+    .contact-form-submit {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: #0A0A0A;
+      color: #fff;
+      border: none;
+      padding: 1rem 2.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      align-self: flex-start;
+    }
+
+    .contact-form-submit:hover { background: #C9A84C; }
+
+    .contact-form-success {
+      display: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: #C9A84C;
+      text-align: center;
+      padding: 1rem 0 0;
+    }
+
+    @media (max-width: 560px) {
+      .contact-form-row { grid-template-columns: 1fr; }
+    }
+
     .social-links {
       display: flex;
       align-items: center;
@@ -894,6 +985,31 @@
     <h2 class="contact-heading reveal">Let's work together</h2>
     <p class="contact-copy reveal">Available for assignments worldwide.</p>
     <a href="mailto:hello@lucaslefty.com" class="contact-email reveal">hello@lucaslefty.com</a>
+
+    <form class="contact-form reveal" id="contactForm" novalidate>
+      <div class="contact-form-row">
+        <label>Name
+          <input type="text" name="name" placeholder="Your name" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" placeholder="your@email.com" required />
+        </label>
+      </div>
+      <label>Project Type
+        <select name="project_type">
+          <option value="" disabled selected>Select a service…</option>
+          <option>Commercial</option>
+          <option>Live Events</option>
+          <option>Portrait / Editorial</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Message
+        <textarea name="message" placeholder="Tell me about your project…" required></textarea>
+      </label>
+      <button type="submit" class="contact-form-submit">Send Message</button>
+      <p class="contact-form-success" id="formSuccess">Thanks — I'll be in touch soon.</p>
+    </form>
 
     <div class="social-links reveal">
       <!-- Instagram -->
@@ -1186,6 +1302,14 @@
 
     // ── Year ─────────────────────────────────────────────────────────────────
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Contact form ──────────────────────────────────────────────────────────
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const success = document.getElementById('formSuccess');
+      success.style.display = 'block';
+      this.reset();
+    });
   </script>
 </body>
 </html>
